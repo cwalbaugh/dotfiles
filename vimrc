@@ -95,10 +95,10 @@ packadd matchit
 set number
 
 " set zz to update the current file if there are changes
-nnoremap zz :update<cr>
+" nnoremap zz :update<cr>
 
 " make jk take you from insert to normal
-imap jk <Esc>
+imap zz <Esc> :update<cr>
 
 " add emphasis to current line
 set cursorline
