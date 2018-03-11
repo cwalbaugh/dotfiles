@@ -20,11 +20,6 @@ set incsearch		" do incremental searching
 " let &guioptions = substitute(&guioptions, "t", "", "g")
 
 
-
-" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
-" so that you can undo CTRL-U after inserting a line break.
-inoremap <C-U> <C-G>u<C-U>
-
 " In many terminal emulators the mouse works just fine, thus enable it.
 if has('mouse')
   set mouse=a
@@ -98,7 +93,7 @@ set number
 " nnoremap zz :update<cr>
 
 " make jk take you from insert to normal
-imap zz <Esc> :update<cr>
+imap jk <Esc> :update<cr>
 
 " add emphasis to current line
 set cursorline
@@ -125,4 +120,30 @@ ino <up> <Nop>
 :augroup END
 
 
-" testin commit use
+
+"vimPlug section
+" automatic installaion
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+	  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+	      \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
+
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'https://github.com/pangloss/vim-javascript.git'
+
+"Papercolor
+Plug 'https://github.com/NLKNguyen/papercolor-theme.git'
+
+call plug#end()
+
+
+"Space grey color theme
+
+set t_Co=256   " This  may or may not needed.
+
+set background=light
+colorscheme PaperColor
