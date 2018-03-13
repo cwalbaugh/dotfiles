@@ -138,6 +138,9 @@ Plug 'https://github.com/pangloss/vim-javascript.git'
 "Papercolor
 Plug 'https://github.com/NLKNguyen/papercolor-theme.git'
 
+"Tpope Surround
+Plug 'https://github.com/tpope/vim-surround.git' 
+
 call plug#end()
 
 
