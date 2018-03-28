@@ -95,19 +95,15 @@ set number
 " make jk take you from insert to normal
 imap jk <Esc> :update<cr>
 
+"map f7 and f8 so as tabn and tabp for tab switching
+map <left> :tabp<cr>
+map <right> :tabn<cr>
+map <up> :tabe<space>
+map <down> :wq<cr>
+
 " add emphasis to current line
 set cursorline
 
-" Unmap the arrow keys
-no <down> <Nop>
-no <left> <Nop>
-no <right> <Nop>
-no <up> <Nop>
-
-ino <down> <Nop>
-ino <left> <Nop>
-ino <right> <Nop>
-ino <up> <Nop>
 
 "use hybrid relative numbers in insert mode, absolute in normal
 
@@ -141,13 +137,23 @@ Plug 'https://github.com/NLKNguyen/papercolor-theme.git'
 "Tpope Surround
 Plug 'https://github.com/tpope/vim-surround.git' 
 
+"repeat so that we can repeat surround commands
+Plug 'https://github.com/tpope/vim-repeat.git'
+
 call plug#end()
 
 
-"Space grey color theme
+"Space grey 'color' theme
 
 set t_Co=256   " This  may or may not needed.
 
 set background=light
 colorscheme PaperColor
-"using git
+
+"auto insert right bracket and set cursor inbetween
+inoremap { {<CR>}<Esc>O
+
+"set timeout to longer time helps surround.vim work
+set timeout timeoutlen=1000 ttimeoutlen=0
+
+
