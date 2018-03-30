@@ -150,10 +150,23 @@ set t_Co=256   " This  may or may not needed.
 set background=light
 colorscheme PaperColor
 
-"auto insert right bracket and set cursor inbetween
-inoremap { {<CR>}<Esc>O
+"auto insert right bracket and set cursor inbetween with a break
+"inoremap { {<CR>}<Esc>O
+
 
 "set timeout to longer time helps surround.vim work
 set timeout timeoutlen=1000 ttimeoutlen=0
+
+"auto close punctuation, ctrl-j to move out of punctuation
+"autocomple html tags, ctrl-j to move out of tags
+inoremap ( ()<Esc>:let leavechar=")"<CR>i
+inoremap [ []<Esc>:let leavechar="]"<CR>i
+inoremap { {<CR><CR>}<Esc>:let leavechar="}"<CR>ki<TAB>
+inoremap " ""<Esc>:let leavechar="\""<CR>i
+inoremap ' ''<Esc>:let leavechar="\'"<CR>i 
+""inoremap < <><Esc>:let leavechar=">"<CR>i
+inoremap <buffer> > ></<C-x><C-o><C-y><C-o>%<Esc>:let leavechar=">"<CR>a
+
+imap <C-j> <Esc>:exec "normal f" . leavechar<CR>a
 
 
