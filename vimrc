@@ -159,14 +159,21 @@ set timeout timeoutlen=1000 ttimeoutlen=0
 
 "auto close punctuation, ctrl-j to move out of punctuation
 "autocomple html tags, ctrl-j to move out of tags
+"todo: add some kind of loop that saves the previous leavechar,
+"looping so that you can escape nested punctuation
 inoremap ( ()<Esc>:let leavechar=")"<CR>i
 inoremap [ []<Esc>:let leavechar="]"<CR>i
 inoremap { {<CR><CR>}<Esc>:let leavechar="}"<CR>ki<TAB>
 inoremap " ""<Esc>:let leavechar="\""<CR>i
 inoremap ' ''<Esc>:let leavechar="\'"<CR>i 
-""inoremap < <><Esc>:let leavechar=">"<CR>i
-inoremap <buffer> > ></<C-x><C-o><C-y><C-o>%<Esc>:let leavechar=">"<CR>a
+"inoremap < <><Esc>:let leavechar=">"<CR>i
+"inoremap <buffer> > ></<C-x><C-o><C-y><C-o>%a<Esc>:let leavechar=">"<CR>
 
 imap <C-j> <Esc>:exec "normal f" . leavechar<CR>a
 
-
+function s:CompleteTags()
+  inoremap <buffer> > ></<C-x><C-o><Esc>:startinsert!<CR><C-O>?</<CR><C-o>:let leavechar=">"<CR>
+  inoremap <buffer> ><Leader> >
+  inoremap <buffer> ><CR> ></<C-x><C-o><Esc>:startinsert!<CR><C-O>?</<CR><CR><Tab><CR><Up><C-O>$<C-o>:let leavechar=">"<CR>
+endfunction
+autocmd BufRead,BufNewFile *.html,*.js,*.xml call s:CompleteTags()
