@@ -50,7 +50,8 @@ call plug#begin('~/.vim/plugged')
 ""Plug 'https://github.com/pangloss/vim-javascript.git'
 
 "Papercolor
-Plug 'https://github.com/NLKNguyen/papercolor-theme.git'
+"Plug 'https://github.com/NLKNguyen/papercolor-theme.git'
+Plug 'https://github.com/altercation/vim-colors-solarized.git'
 
 "Tpope Surround
 Plug 'https://github.com/tpope/vim-surround.git' 
@@ -58,29 +59,65 @@ Plug 'https://github.com/tpope/vim-surround.git'
 "repeat so that we can repeat surround commands
 Plug 'https://github.com/tpope/vim-repeat.git'
 
+"makes the '%' command work better
+Plug 'https://github.com/tmhedberg/matchit.git'
+
+"NERDtree for navigation
+Plug 'https://github.com/scrooloose/nerdtree.git'
+
+
 call plug#end()
 
+"Shortcut for opening NERDtree
+map <C-n> :NERDTreeToggle<CR>
 
 "PaperColor 'color' theme
 
-set t_Co=256   " This is may or may not needed."
+"set t_Co=256   " This is may or may not needed.
+"syntax enable
+"set background=light
+"colorscheme PaperColor
+
+set t_Co=256
 syntax enable
 set background=light
-colorscheme PaperColor
-
+colorscheme solarized
 
 
 "set timeout to longer time helps surround.vim work
 set timeout timeoutlen=1000 ttimeoutlen=0
 
 
-"AUTO COMPLETE SYMETTRIC SYMBOLS
+"AUTO COMPLETE SYMETTRIC SYMBOLS <-----------------
 
-"todo: add super TAB that escapes to global level, cntrl-tab=escape all punctuation
+"behavior one: insert symbol and matching symbol is added while cursor remains inside both characters. tab to escape.
+"behavior two: insert symbol and hit leader key just enters the symbol like it would normally.
+"behavior three: insert symbol and hit enter key to enter both opening and closing symbols serparated by a line. tab to escape.
+
+"tab + leader in insert mode just adds a tab
+
+
+
+"problem: setting up remmapings for each kind of symbol is annoying
+"todo: make some kind of loop that allows us to just add the opening and closing symbols we want and then it remaps it for us.
+
+"problem: sometimes we have to jump out of multiple nestings in a row and hitting tab a ton of times is annoying
+"todo: add super TAB that escapes to global level, ie. cntrl-tab=escape all punctuation
+
+"problem: we have to type :set filetype=html on html files for tag completion to work
 "todo: add autodetect of filetype so you don't have to type :set filetype=html
-"todo: add record of html completed tags to escape nested tags
 
-"OLD METHOD FOR AUTOCOMPLETE
+"problem: stack only remembers the '>' character for html tags and has trouble with deeply nested tags
+"todo: add record of html completed tags to the stack to allow us to escape nested tags. Or use a better function which doesn't just remember the closing symbols used, but is smarter and knows the nesting of the cursor position.
+
+"problem: autoindent and smartindent add extra tabs where we don't want them sometimes.
+"todo: add section to handle the potential of autoindent or smart indent being set on, ie., turn them off
+
+"problem: when symbols are added to the stack, and then we navigated out of one nested area to another without tab, the stack is no longer relevent to that location
+"todo: change from a strategy that uses a stack to one that has a smarter function which recognizes the current nesting of the cursor
+
+"Old method for autocomplete, kept for reference
+
 "auto close punctuation, ctrl-j to move out of punctuation
 "autocomple html tags, ctrl-j to move out of tags
 "todo: add some kind of loop that saves the previous leavechar,
@@ -94,6 +131,8 @@ set timeout timeoutlen=1000 ttimeoutlen=0
 """inoremap <buffer> > ></<C-x><C-o><C-y><C-o>%a<Esc>:let leavechar=">"<CR>
 ""
 ""imap <C-j> <Esc>:exec "normal f" . leavechar<CR>a
+
+"End of old method
 
 
 "Auto complete for html tags and punctuation
@@ -156,4 +195,5 @@ autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 "for the times when you just actually need the tab key
 inoremap <TAB><Leader> <TAB>
 
-"END AUTO COMPLETE SYMETTRIC SYMBOLS
+"END AUTO COMPLETE SYMETTRIC SYMBOLS <-------------------
+
